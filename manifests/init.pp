@@ -4,8 +4,8 @@
 #   include firewall
 class firewall {
 
-  $servicename  = "dev.pf"
-  $configdir  = "${boxen::config::configdir}"
+  $servicename = 'dev.pf'
+  $configdir  = $boxen::config::configdir
 
   service { $servicename:
     ensure  => running
@@ -27,6 +27,6 @@ class firewall {
   file { "${configdir}/pf.rules":
     content => template('firewall/pf.rules.erb'),
     notify  => Service[$servicename],
-    require => File[$configdir],
+    require => File[$configdir]
   }
 }
