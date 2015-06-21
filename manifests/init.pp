@@ -1,6 +1,6 @@
-# Public: Configure pf
+# Configure pf
 #
-# Examples
+# Examples:
 #   include firewall
 class firewall {
 
