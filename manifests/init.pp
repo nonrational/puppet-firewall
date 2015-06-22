@@ -5,7 +5,11 @@
 class firewall {
 
   $servicename = 'dev.pf'
-  $configdir  = $boxen::config::configdir
+  $configdir  = "${boxen::config::configdir}/pf"
+
+  file { $configdir:
+    ensure => directory
+  }
 
   service { $servicename:
     ensure  => running
@@ -17,6 +21,9 @@ class firewall {
     owner   => 'root',
     notify  => Service[$servicename]
   }
+
+  notify { "${configdir}/pf.conf": }
+  notify { "${configdir}/pf.rules": }
 
   file { "${configdir}/pf.conf":
     content => template('firewall/pf.conf.erb'),
