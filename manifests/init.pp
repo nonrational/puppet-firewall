@@ -4,10 +4,12 @@
 #   include firewall
 #
 #   class { 'firewall':
-#     servicename = 'dev.firewall'
+#     allow_in => [31337]
 #   }
 #
-class firewall {
+class firewall(
+  $allow_in = undef
+) {
   include boxen::config
 
   $configdir   = "${boxen::config::configdir}/pf"

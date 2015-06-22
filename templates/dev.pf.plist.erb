@@ -2,7 +2,7 @@
 <plist version="1.0">
 <dict>
     <key>Label</key>
-    <string>dev.pf</string>
+    <string><%= scope.lookupvar('servicename') %></string>
     <key>Program</key>
     <string>/sbin/pfctl</string>
     <key>ProgramArguments</key>
@@ -10,15 +10,15 @@
         <string>/sbin/pfctl</string>
         <string>-e</string>
         <string>-f</string>
-        <string>/opt/boxen/config/pf.conf</string>
+        <string><%= scope.lookupvar('configdir') %>/pf.conf</string>
     </array>
     <key>RunAtLoad</key>
     <true/>
     <key>ServiceDescription</key>
     <string>Boxen's FreeBSD Packet Filter (pf) daemon</string>
     <key>StandardErrorPath</key>
-    <string>/opt/boxen/log/pf.log</string>
+    <string><%= scope.lookupvar('boxen::config::logdir') %>/pf.log</string>
     <key>StandardOutPath</key>
-    <string>/opt/boxen/log/pf.log</string>
+    <string><%= scope.lookupvar('boxen::config::logdir') %>/pf.log</string>
 </dict>
 </plist>
