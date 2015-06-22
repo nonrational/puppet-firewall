@@ -3,9 +3,10 @@
 # Examples:
 #   include firewall
 class firewall {
+  include boxen::config
 
+  $configdir   = "${boxen::config::configdir}/pf"
   $servicename = 'dev.pf'
-  $configdir  = "${boxen::config::configdir}/pf"
 
   file { $configdir:
     ensure => directory
@@ -21,9 +22,6 @@ class firewall {
     owner   => 'root',
     notify  => Service[$servicename]
   }
-
-  notify { "${configdir}/pf.conf": }
-  notify { "${configdir}/pf.rules": }
 
   file { "${configdir}/pf.conf":
     content => template('firewall/pf.conf.erb'),

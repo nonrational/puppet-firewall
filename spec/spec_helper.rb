@@ -11,7 +11,11 @@ end
 
 def default_test_facts
   {
-    :boxen_user => 'betterbot',
-    :osfamily => 'Darwin',
+    :boxen_home                  => "/test/boxen",
+    :boxen_srcdir                => "/test/boxen/src",
+    :homebrew_root               => "/test/boxen/custom/homebrew",
+    :boxen_user                  => "testuser",
+    :macosx_productversion_major => "10.10",
+    :osfamily                    => "Darwin",
   }
 end
