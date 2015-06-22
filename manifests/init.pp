@@ -2,6 +2,11 @@
 #
 # Examples:
 #   include firewall
+#
+#   class { 'firewall':
+#     servicename = 'dev.firewall'
+#   }
+#
 class firewall {
   include boxen::config
 
