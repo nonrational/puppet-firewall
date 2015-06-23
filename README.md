@@ -6,16 +6,15 @@ Firewalls -- and packet filters -- rock. Configuring the OSX Application Firewal
 
 ## Usage
 
-
 Default:
 ```puppet
 include firewall
 ```
 
-~~Customized:~~ (**Not Implemented Yet**)
+Customized:
 ```puppet
 class { 'firewall':
-  whitelisted_ports => [22,80]
+  allow_inbound_ports => [ 22, 80 ]
 }
 ```
 
