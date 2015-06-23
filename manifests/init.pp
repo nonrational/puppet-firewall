@@ -41,4 +41,11 @@ class firewall(
     notify  => Service[$servicename],
     require => File[$configdir]
   }
+
+  # exec { "${configdir}/emerging-PF-ALL.rules":
+  #   command => "curl --create-dirs -o $configdir/emerging-PF-ALL.rules http://rules.emergingthreats.net/fwrules/emerging-PF-ALL.rules",
+  #   creates => "$configdir/emerging-PF-ALL.rules",
+  #   notify  => Service[$servicename],
+  #   require => Package["curl"]
+  # }
 }

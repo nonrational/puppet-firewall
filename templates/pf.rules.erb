@@ -11,11 +11,6 @@ set skip on lo0
 # Scrub incoming packets
 scrub in all no-df
 
-# Queueing
-
-# Translation
-
-# Filtering
 # Antispoof
 antispoof log quick for { lo0 en0 en2 }
 
@@ -25,8 +20,75 @@ block in log
 # Block to/from illegal destinations or sources
 block in log quick from no-route to any
 
-# Allow critical system traffic
-pass in quick inet proto udp from any port 67 to any port 68
+pass proto icmp all keep state
+# pass quick on awdl0 all no state
+# pass quick on p2p0 all no state
+
+# # Allow critical system traffic
+# pass in  quick proto udp from any port = 5353 to any port = 5353 keep state allow-opts
+# pass out quick proto udp from any port = 5353 to any port = 5353 keep state allow-opts
+
+# pass out quick proto tcp from any port = 68 to any port = 67 flags S/SA keep state
+# pass out quick proto udp from any port = 68 to any port = 67 keep state
+
+# pass in quick proto tcp from any port = 67 to any port = 68 flags S/SA keep state
+# pass in quick proto udp from any port = 67 to any port = 68 keep state
+
+# pass quick inet6 proto udp from any to any port = 546 keep state
+
+# pass inet6 proto ipv6-icmp all icmp6-type echoreq keep state allow-opts
+# pass inet6 proto ipv6-icmp all icmp6-type groupqry keep state allow-opts
+# pass inet6 proto ipv6-icmp all icmp6-type grouprep keep state allow-opts
+# pass inet6 proto ipv6-icmp all icmp6-type groupterm keep state allow-opts
+# pass inet6 proto ipv6-icmp all icmp6-type routersol keep state allow-opts
+# pass inet6 proto ipv6-icmp all icmp6-type routeradv keep state allow-opts
+# pass inet6 proto ipv6-icmp all icmp6-type neighbrsol keep state allow-opts
+# pass inet6 proto ipv6-icmp all icmp6-type neighbradv keep state allow-opts
+# pass inet6 proto ipv6-icmp all icmp6-type 143 keep state allow-opts
+
+# pass proto igmp all keep state allow-opts
+# pass quick inet from any to 224.0.0.0/4 flags S/SA keep state allow-opts
+# pass quick inet6 from any to ff00::/8 flags S/SA keep state allow-opts
+
+# https://support.apple.com/en-us/HT202944
+# AppleShare, Personal File Sharing, Apple File Service
+# afpovertcp = "548"
+# # Bonjour, Back to My Mac
+# ssdp = "1900"
+# bonjour0 = "5350"
+# natpmp = "5351"
+# # Bonjour, AirPlay, Home Sharing, Printer Discovery, Back to My Mac
+# mdns = "5353"
+# airdrop = "49152:65535"
+
+# # allow airdrop
+# pass in quick inet proto udp \
+#     from any \
+#     to any port { $ssdp, $bonjour0, $natpmp, $mdns, $airdrop }
+
+# pass in quick inet proto tcp \
+#     from any \
+#     to any port { $afpovertcp, $airdrop }
+
+table <Everyone> {0.0.0.0/0 ::/0 } persist
+table <192.168-net> {192.168.0.0/16 } persist
+table <10-net> {10.0.0.0/8 } persist
+table <172.16-net> {172.16.0.0/12 } persist
+table <IPv6-net> {fe80::/10 } persist
+
+table <bruteforce> { } persist
+block in quick from <bruteforce> to any
+
+block in  proto {tcp, udp} from any to any port {53 67 68 123 389 636 5353 5354}
+pass  in  proto {tcp, udp} from <192.168-net> to any port {53 67 68 123 389 636 5353 5354}  flags S/SA keep state
+pass  in  proto {tcp, udp} from <10-net> to any port {53 67 68 123 389 636 5353 5354}  flags S/SA keep state
+pass  in  proto {tcp, udp} from <172.16-net> to any port {53 67 68 123 389 636 5353 5354}  flags S/SA keep state
+pass  in  proto {tcp, udp} from <IPv6-net> to any port {53 67 68 123 389 636 5353 5354}  flags S/SA keep state
+block in  proto {tcp, udp} from any to any port {49152:65535}
+pass  in  proto {tcp, udp} from <192.168-net> to any port {49152:65535}  flags S/SA keep state
+pass  in  proto {tcp, udp} from <10-net> to any port {49152:65535}  flags S/SA keep state
+pass  in  proto {tcp, udp} from <172.16-net> to any port {49152:65535}  flags S/SA keep state
+pass  in  proto {tcp, udp} from <IPv6-net> to any port {49152:65535}  flags S/SA keep state
 
 # Allow outgoing traffic
 pass out inet proto tcp from any to any keep state
