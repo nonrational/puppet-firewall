@@ -1,6 +1,8 @@
-# (`pf`) Firewall Puppet Module for Boxen ![https://travis-ci.org/nonrational/puppet-firewall](https://travis-ci.org/nonrational/puppet-firewall.svg)
+# `pf` Firewall Puppet Module for Boxen
 
-Firewalls -- and packet filters -- rock. Configuring the OSX Application Firewall configuration does not.
+[![Build Status](https://travis-ci.org/nonrational/puppet-firewall.svg)](https://travis-ci.org/nonrational/puppet-firewall)
+
+Firewalls -- and packet filters -- rock. Configuring the OSX Application Firewall configuration does not rock
 
 ## Usage
 
@@ -10,7 +12,7 @@ Default:
 include firewall
 ```
 
-Customized (**NOT IMPLEMENTED**)
+~~Customized:~~ (**Not Implemented Yet**)
 ```puppet
 class { 'firewall':
   whitelisted_ports => [22,80]
@@ -20,3 +22,4 @@ class { 'firewall':
 ## Required Puppet Modules
 
 * `boxen`
+* `stdlib`
