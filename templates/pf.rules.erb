@@ -15,6 +15,10 @@ block in log quick from no-route to any
 
 pass quick proto icmp all
 
+<% scope.lookupvar('allow_inbound_ports').each do |port| -%>
+pass in quick proto { tcp udp } from any to any port { <%= port %> }
+<% end -%>
+
 # [X] 53    DNS
 # [X] 67    DHCP
 # [X] 68    DHCP

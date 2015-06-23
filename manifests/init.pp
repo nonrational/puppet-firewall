@@ -4,10 +4,12 @@
 #   include firewall
 #
 #   class { 'firewall':
-#     allow_in => [31337]
+#     allow_inbound_ports => [ 443, 31337 ]
 #   }
 #
-class firewall {
+class firewall(
+  $allow_inbound_ports = [],
+) {
   include boxen::config
 
   $configdir   = "${boxen::config::configdir}/pf"
