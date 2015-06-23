@@ -1,6 +1,6 @@
-# Firewall (`pf`) Puppet Module for Boxen ![](https://travis-ci.org/nonrational/puppet-firewall)
+# (`pf`) Firewall Puppet Module for Boxen ![](https://travis-ci.org/nonrational/puppet-firewall.svg)
 
-Firewalls rock. OS X firewall configuration sucks.
+Firewalls -- and packet filters -- rock. Configuring the OSX Application Firewall configuration does not.
 
 ## Usage
 
