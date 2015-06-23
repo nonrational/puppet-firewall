@@ -9,6 +9,7 @@
 #
 class firewall(
   $allow_inbound_ports = [],
+  $allow_ping = true
 ) {
   include boxen::config
 

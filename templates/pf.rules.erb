@@ -13,21 +13,26 @@ antispoof log quick for { lo0 en0 en2 }
 block in log
 block in log quick from no-route to any
 
-pass quick proto icmp all
+<%= scope.lookupvar('allow_ping') ? "pass" : "block" %> quick proto icmp all
 
 <% scope.lookupvar('allow_inbound_ports').each do |port| -%>
 pass in quick proto { tcp udp } from any to any port { <%= port %> }
 <% end -%>
 
+# https://support.apple.com/en-us/HT202944
+basic_services = "any port { 53 67 68 123 5353 5354 } flags S/SA keep state"
+
 # [X] 53    DNS
 # [X] 67    DHCP
 # [X] 68    DHCP
+# [ ] 111   rpcbind
 # [X] 123   NTP
 # [ ] 389   LDAP
 # [ ] 636   LDAPS
+# [ ] 2049  NFS
 # [X] 5353  mDNS
 # [X] 5354  mDNS (?)
-basic_services = "any port { 53 67 68 123 5353 5354 } flags S/SA keep state"
+
 # The range 49152–65535 (215+214 to 216−1) contains dynamic or private ports that cannot be registered with IANA
 dynamic_ports  = "any port { 49152:65535 } flags S/SA keep state"
 
