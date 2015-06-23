@@ -16,15 +16,14 @@ block in log quick from no-route to any
 pass quick proto icmp all
 
 # [X] 53    DNS
-# [X] 67    BOOTP/DHCP
-# [X] 68    BOOTP/DHCP
+# [X] 67    DHCP
+# [X] 68    DHCP
 # [X] 123   NTP
 # [ ] 389   LDAP
 # [ ] 636   LDAPS
 # [X] 5353  mDNS
 # [X] 5354  mDNS (?)
 basic_services = "any port { 53 67 68 123 5353 5354 } flags S/SA keep state"
-
 # The range 49152–65535 (215+214 to 216−1) contains dynamic or private ports that cannot be registered with IANA
 dynamic_ports  = "any port { 49152:65535 } flags S/SA keep state"
 
