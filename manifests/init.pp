@@ -7,9 +7,7 @@
 #     allow_in => [31337]
 #   }
 #
-class firewall(
-  $allow_in = undef
-) {
+class firewall {
   include boxen::config
 
   $configdir   = "${boxen::config::configdir}/pf"
