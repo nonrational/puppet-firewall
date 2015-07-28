@@ -24,7 +24,7 @@ class firewall(
     content => template('firewall/pf-control.sh.erb'),
     group   => 'wheel',
     owner   => 'root',
-    mode    => '755'
+    mode    => '0755'
   }
   ->
   service { $servicename:
