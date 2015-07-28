@@ -20,6 +20,13 @@ class firewall(
     ensure => directory
   }
 
+  file { "${boxen::config::bindir}/pf-control.sh":
+    content => template('firewall/pf-control.sh.erb'),
+    group   => 'wheel',
+    owner   => 'root',
+    mode    => '755'
+  }
+  ->
   service { $servicename:
     ensure  => running
   }

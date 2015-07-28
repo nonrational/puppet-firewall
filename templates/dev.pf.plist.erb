@@ -3,19 +3,22 @@
 <dict>
     <key>Label</key>
     <string><%= scope.lookupvar('servicename') %></string>
+
     <key>Program</key>
-    <string>/sbin/pfctl</string>
+    <string><%= scope.lookupvar('boxen::config::bindir') %>/pf-control.sh</string>
+
     <key>ProgramArguments</key>
     <array>
-        <string>/sbin/pfctl</string>
-        <string>-e</string>
-        <string>-f</string>
-        <string><%= scope.lookupvar('configdir') %>/pf.conf</string>
+        <string><%= scope.lookupvar('boxen::config::bindir') %>/pf-control.sh</string>
+        <string>restart</string>
     </array>
+
     <key>RunAtLoad</key>
     <true/>
+
     <key>ServiceDescription</key>
     <string>Boxen's FreeBSD Packet Filter (pf) daemon</string>
+
     <key>StandardErrorPath</key>
     <string><%= scope.lookupvar('boxen::config::logdir') %>/pf.log</string>
     <key>StandardOutPath</key>
